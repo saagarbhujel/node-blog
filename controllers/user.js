@@ -13,13 +13,22 @@ const userSignup = async(req, res)=>{
 
 const userSignin = async(req, res)=>{
     const {email, password} = req.body;
-    const user = await User.matchPassword(email, password);
-    console.log(user);
-    return res.redirect('/');
+ try {
+    const token = await User.matchPasswordAndGenerateToken(email, password);
+    console.log("token",token);
+    return res.cookie("token", token).redirect('/');
+ } catch (error) {
+    return res.render("signin", {error: "Invalid email or password"})
+ }
+}
+
+const userLogout = (req, res)=>{
+    res.clearCookie('token').redirect('/');
 }
 
 
 module.exports = {
     userSignup,
-    userSignin
+    userSignin,
+    userLogout
 }
