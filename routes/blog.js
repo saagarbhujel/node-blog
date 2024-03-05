@@ -4,6 +4,8 @@ const multer  = require('multer')
 const path = require('path');  
 
 const Blog = require('../models/blog');
+const {addNewBlog, getBlog} = require('../controllers/blog');
+
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -23,23 +25,9 @@ router.get('/addnew',(req,res)=>{
     })
 })
 
-router.post('/', upload.single('coverImage') ,async (req, res)=>{
-   const blog = await Blog.create({
-    title: req.body.title,
-    body: req.body.body,
-    coverImage: `/uploads/${req.file.filename}`,
-    createdBy: req.user._id
-   })
-   return res.redirect(`/blog/${blog._id}`);
-})
+router.post('/', upload.single('coverImage') ,addNewBlog)
 
-router.get('/:id', async(req, res)=>{
-    const blog = await Blog.findById(req.params.id)
-    return res.render('blog', {
-        user: req.user,
-        blog
-    })
-})
+router.get('/:id', getBlog)
 
 
 module.exports = router;
