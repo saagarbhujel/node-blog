@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head') %>
+    <title>Blog</title>
+    
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <!-- <%= JSON.stringify(blog)   %> -->
+
+<div class="container mt-4">
+<h1><%= blog.title %></h1>
+<img src="<%= blog.coverImage %>" alt="" class="img-fluid" />
+<pre><%= blog.body %></pre>
+</div>
+    
+
+
+ <%- include('./partials/script') %>
+</body>
+</html>

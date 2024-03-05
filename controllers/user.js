@@ -15,7 +15,7 @@ const userSignin = async(req, res)=>{
     const {email, password} = req.body;
  try {
     const token = await User.matchPasswordAndGenerateToken(email, password);
-    console.log("token",token);
+    // console.log("token",token);
     return res.cookie("token", token).redirect('/');
  } catch (error) {
     return res.render("signin", {error: "Invalid email or password"})
