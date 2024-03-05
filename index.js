@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -8,10 +9,9 @@ const blogRoute = require('./routes/blog');
 const { checkForAuthenticationCookie } = require('./middlewares/authentication');
 
 const app = express();
+const PORT = process.env.PORT || 8000;
 
-const PORT = 8080;
-
-mongoose.connect("mongodb+srv://saagar:saagar@cluster0.9phl9ii.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then((e)=> console.log("Connected to DB"));
+mongoose.connect(process.env.MONGO_URL).then((e)=> console.log("Connected to DB"));
 
 app.set('view engine', 'ejs');
 app.set('views', path.resolve('./views'));
